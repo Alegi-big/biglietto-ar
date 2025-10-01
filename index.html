@@ -1,68 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Biglietto da Visita AR</title>
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      background: #111;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    model-viewer {
-      width: 100%;
-      height: 80vh;
-      background-color: #222;
-      border-radius: 12px;
-    }
-    h1 {
-      font-size: 1.2rem;
-      margin: 10px;
-    }
-    /* Stile bottone hotspot */
-    button {
-      background: rgba(255,255,255,0.85);
-      border: none;
-      border-radius: 8px;
-      padding: 5px 12px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    button:hover {
-      background: rgba(200,200,200,1);
-    }
-  </style>
+<meta charset="utf-8" />
+<title>Debug Hotspots model-viewer</title>
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<style>
+  body { margin:0; background:#111; color:#fff; font-family:Arial; display:flex; flex-direction:column; height:100vh; }
+  h1 { margin:12px; font-size:1rem; text-align:center; }
+  .wrap { width:100%; height:85vh; position:relative; padding:12px; box-sizing:border-box; }
+  model-viewer { width:100%; height:100%; background:#222; border-radius:8px; }
+
+  /* stile visibile per gli hotspot per debug */
+  .hotspot-debug {
+    display:inline-block;
+    background: rgba(255,255,255,0.95);
+    color:#000;
+    padding:6px 10px;
+    border-radius:6px;
+    font-weight:600;
+    text-decoration:none;
+    pointer-events:auto; /* importante */
+    transform: translateZ(0); /* hint */
+  }
+</style>
 </head>
 <body>
-  <h1>Biglietto da visita AR</h1>
+  <h1>Debug Hotspots — prova 1 (clicca i bottoni)</h1>
 
-  <model-viewer src="biglietto_visita.glb"
-                alt="Biglietto da visita 3D"
-                ar
-                ar-modes="scene-viewer quick-look webxr"
-                auto-rotate
-                camera-controls
-                shadow-intensity="1">
+  <div class="wrap">
+    <model-viewer id="mv"
+      src="biglietto_visita.glb"
+      alt="Biglietto 3D"
+      ar
+      ar-modes="scene-viewer quick-look webxr"
+      auto-rotate
+      camera-controls
+      shadow-intensity="1"
+    >
+      <!-- HOTSPOT DI DEBUG al centro: serve per verificare che hotspots funzionino -->
+      <a slot="hotspot-0"
+         id="debug0"
+         data-position="0m 0m 0m"
+         data-normal="0m 1m 0m"
+         class="hotspot-debug"
+         href="#"
+         onclick="console.log('debug0 clicked'); return false;">
+         DEBUG CENTRO
+      </a>
 
-    <!-- Hotspot cliccabile -->
-  <a slot="hotspot-1"
-   data-position="-5.2006m 11.385m -1.9597m"
-   data-normal="0m 1m 0m"
-   href="https://www.miosito.it"
-   target="_blank"
-   style="background: rgba(255,255,255,0.9); padding: 5px 10px; border-radius: 8px; text-decoration:none; color:black; font-weight:bold;">
-   🌐 Vai al sito
-</a>
-  </model-viewer>
+      <!-- IL TUO HOTSPOT (visibile) con le coordinate che hai trovato -->
+      <a slot="hotspot-1"
+         id="hotspotLink"
+         data-position="-5.2006m 11.385m -1.9597m"
+         data-normal="0m 1m 0m"
+         class="hotspot-debug"
+         href="https://www.miosito.it"
+         target="_blank"
+         title="Apre il sito">
+         🔗 Vai (hotspot-1)
+      </a>
+    </model-viewer>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      const mv = document.getElementById('mv');
+
+      // Verifica che il model-viewer sia pronto
+      mv.addEventListener('load', () => console.log('model-viewer loaded'));
+
+      // Debug: esistenza degli elementi hotspot nel DOM
+      console.log('hotspot debug0 element =', document.getElementById('debug0'));
+      console.log('hotspot link element =', document.getElementById('hotspotLink'));
+
+      // Aggiungo listener JS anche per sicurezza
+      const h = document.getElementById('hotspotLink');
+      h.addEventListener('click', (ev) => {
+        console.log('hotspotLink clicked event:', ev);
+        // non impedisco il default: lascia che l'<a> apra la pagina
+      });
+
+      // Se il debug center è visibile ma il tuo hotspot no:
+      // indica che le coordinate del tuo hotspot sono fuori scala / fuori vista.
+      // In quel caso, prova a mettere valori piccoli (es. 0.05m 0.01m 0m) per testare.
+    });
+  </script>
 </body>
 </html>
-
-
