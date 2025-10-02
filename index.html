@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Biglietto da Visita AR</title>
-  <script type="module" src="https://unpkg.com/@google/model-viewer@latest/dist/model-viewer.min.js"></script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -22,20 +22,14 @@
       background-color: #222;
       border-radius: 12px;
     }
-    a {
-      background: rgba(255,255,255,0.9);
-      padding: 5px 10px;
-      border-radius: 8px;
-      text-decoration: none;
-      color: black;
-      font-weight: bold;
-      font-family: Arial;
+    h1 {
+      font-size: 1.2rem;
+      margin: 10px;
     }
   </style>
 </head>
 <body>
   <h1>Biglietto da visita AR</h1>
-
   <model-viewer src="biglietto_visita.glb"
                 alt="Biglietto da visita 3D"
                 ar
@@ -43,16 +37,10 @@
                 auto-rotate
                 camera-controls
                 shadow-intensity="1">
-    
-    <!-- Hotspot: angolo del biglietto -->
-    <a slot="hotspot-1" href="https://www.linkedin.com/in/alessio-mininni-0b947152/" target="_blank"
-       data-position="-5.2006m 11.385m -1.9597m"
-       data-normal="0m 1m 0m">
-    <button>Vai al sito</button>
-    </a>
   </model-viewer>
 </body>
 </html>
+
 
 
 
