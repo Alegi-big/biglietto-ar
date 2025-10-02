@@ -16,61 +16,51 @@
       justify-content: center;
       height: 100vh;
     }
+    model-viewer {
+      width: 100%;
+      height: 80vh;
+      background-color: #222;
+      border-radius: 12px;
+    }
     h1 {
       font-size: 1.2rem;
       margin: 10px;
     }
-    .viewer-container {
-      position: relative;
-      width: 100%;
-      height: 80vh;
-    }
-    model-viewer {
-      width: 100%;
-      height: 100%;
-      background-color: #222;
-      border-radius: 12px;
-    }
-    /* Bottone overlay cliccabile */
-    .overlay-link {
-      position: absolute;
-      top: 50%;   /* cambia questi valori per posizionarlo dove vuoi */
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(255, 255, 255, 0.9);
-      color: black;
-      padding: 8px 16px;
+    /* Stile bottone hotspot */
+    button {
+      background: rgba(255,255,255,0.85);
+      border: none;
       border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
+      padding: 5px 12px;
+      font-size: 0.9rem;
       cursor: pointer;
-      z-index: 10;
       transition: background 0.2s;
     }
-    .overlay-link:hover {
-      background: rgba(200, 200, 200, 1);
+    button:hover {
+      background: rgba(200,200,200,1);
     }
   </style>
 </head>
 <body>
   <h1>Biglietto da visita AR</h1>
 
-  <div class="viewer-container">
-    <model-viewer src="biglietto_visita.glb"
-                  alt="Biglietto da visita 3D"
-                  ar
-                  ar-modes="scene-viewer quick-look webxr"
-                  auto-rotate
-                  camera-controls
-                  shadow-intensity="1">
-    </model-viewer>
+  <model-viewer src="biglietto_visita.glb"
+                alt="Biglietto da visita 3D"
+                ar
+                ar-modes="scene-viewer quick-look webxr"
+                auto-rotate
+                camera-controls
+                shadow-intensity="1">
 
-    <!-- Link cliccabile in overlay -->
-    <a class="overlay-link" href="https://www.linkedin.com/in/alessio-mininni-0b947152/" top: 50%; left: 50%>
-      🌐 Vai al sito
-    </a>
-  </div>
+    <!-- Hotspot cliccabile -->
+  <a slot="hotspot-1"
+   data-position="-5.2006m 11.385m -1.9597m"
+   data-normal="0m 1m 0m"
+   href="https://www.linkedin.com/in/alessio-mininni-0b947152/"
+   target="_blank"
+   style="background: rgba(255,255,255,0.9); padding: 5px 10px; border-radius: 8px; text-decoration:none; color:black; font-weight:bold;">
+   🌐 Vai al sito
+</a>
+  </model-viewer>
 </body>
 </html>
-
-
